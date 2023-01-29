@@ -1,0 +1,51 @@
+:root {
+    --primary: rgb(12, 99, 229);
+    --secondary: rgb(30, 82, 84);
+    --tertiary: rgb(159, 180, 241);
+    --dark: rgb(22, 28, 51);
+    --light: rgba(238, 238, 247, 1);
+       
+   }
+   body { 
+    background-color: var(--light);
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	} 
+
+.display {
+    text-align: center;
+    color: var(--dark);
+  
+}
+#btn {
+    background-color:var(--tertiary);
+	color: var(--light);
+	padding: 10px 30px;
+	border: none;
+	border-radius: 10px;
+	font-size: 18px;
+	margin: 10px;
+}
+
+#btn:hover {
+	background-color: var(--dark);
+	}
+#page-content {
+	display: flex;
+	text-align: center;
+	 flex-wrap: wrap;
+	align-items: center;
+	justify-content:center;
+flex-direction: column; 
+margin-top: 10%;
+
+}
+.choicesButton {
+	display: flex;
+	margin: 10%;
+	font-style: bold;
+	font-size: medium;
+	flex-direction: column;
+	width: 50%;
+	background-color:var(--tertiary);
+	
+}
