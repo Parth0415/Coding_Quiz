@@ -1,6 +1,7 @@
 var displayBox = document.getElementById("displayBox");
 var startQuizButton = document.createElement("button");
 startQuizButton.id ="btn";
+var questionEl = document.createElement('h2')
 var quizChoice = document.getElementById("choiceBox");
 var choiceButtonA = document.createElement("button");
 var choiceButtonB = document.createElement("button");
@@ -13,7 +14,7 @@ choiceButtonC.className = "choicesButton";
 choiceButtonD.className = "choicesButton";
 
 var quizQuestion = document.getElementById("questionBox");
-var qNumber = 0;
+var i = 0;
 
 var showDisplayBox = function() {
 
@@ -73,21 +74,26 @@ function startTimer () {
 
 
 function showQuestion () {
-	if (qNumber > questions.length -1) {
-		showResultBox();
-	} else {
-		quizQuestion.innerText= questions[qNumber].question;
-       showChoices(qNumber);
-	}
-
+	// if (i >= questions.length -1) {
+	// 	showResultBox();
+	// } else {
+	// 	quizQuestion.innerText= questions[i].question;
+    //    showChoices(i);
+	// }
+for (var i=0; i >= questions.length; i--) {
+	quizQuestion.innertext = questions[i].question;
 }
-
-function showChoices(iterate) {
+}
+showQuestion();
+function showChoices() {
 	console.log(showChoices)
-	choiceButtonA.textcontent = questions[iterate].choices[0];
-	choiceButtonB.textcontent = questions[iterate].choices[1];
-	choiceButtonC.textcontent = questions[iterate].choices[2];
-	choiceButtonD.textcontent = questions[iterate].choices[3];
+	var anyText = "Parth";
+	questionEl.textcontent = questions[i].question;
+	//choiceButtonA.textcontent = questions[i].choices[0];
+	choiceButtonB.textcontent = questions[i].choices[1];
+	choiceButtonC.textcontent = questions[i].choices[2];
+	choiceButtonD.textcontent = questions[i].choices[3];
+	choiceButtonA.textContent = anyText;
 
 	quizChoice.appendChild(choiceButtonA);
 	quizChoice.appendChild(choiceButtonB);
