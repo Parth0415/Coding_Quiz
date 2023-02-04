@@ -40,11 +40,11 @@
 
 .choicesButton:hover {
 
-	background-color: var(--dark);
+	background-color: var(--tertiary);
 
 }
 #btn {
-    background-color:var(--tertiary);
+    background-color:var(--dark);
 	color: var(--light);
 	padding: 10px 30px;
 	border: none;
@@ -54,7 +54,7 @@
 }
 
 #btn:hover {
-	background-color: var(--dark);
+	background-color: var(--tertiary);
 	}
 #page-content {
 	display: flex;
@@ -74,7 +74,7 @@ color: var(--light);
 	align-self: center;
 	font-size: medium;
 	flex-direction: column;
-	background-color:var(--tertiary);
+	background-color:var(--dark);
 	height: fit-content;
 }
 #answerLine {
@@ -99,7 +99,7 @@ color: var(--light);
 }
 
 #submitButton {
-	background-color:var(--tertiary);
+	background-color:var(--dark);
 	color: var(--light);
 	padding: 10px 30px;
 	border: none;
@@ -110,7 +110,7 @@ color: var(--light);
 }
 
 #submitButton:hover {
-	background-color: var(--dark);
+	background-color: var(--tertiary);
 }
 
 #timerAndScores {
@@ -125,7 +125,7 @@ color: var(--light);
 	margin-top: 5%;
 }
 .endScreenButton {
-	background-color:var(--tertiary);
+	background-color:var(--dark);
 	color: var(--light);
 	padding: 10px 30px;
 	border: none;
@@ -135,14 +135,14 @@ color: var(--light);
 }
 
 .endScreenButton:hover {
-	background-color: var(--dark);
+	background-color: var(--tertiary);
 }
 .quiz{
 	width: 100%
 }
 
 #endScoresHistory {
-background-color: var(--tertiary);
+background-color: var(--dark);
 margin-top: 15px;
 
 
