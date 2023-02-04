@@ -1,7 +1,14 @@
 var displayBox = document.getElementById("displayBox");
+var quizBoxEl = document.getElementById("quizBox");
 var startQuizButton = document.createElement("button");
-startQuizButton.id ="btn";
-var questionEl = document.createElement('h2')
+startQuizButton.id = "btn";
+//var questionEl = document.createElement('h2');
+var viewHighScoresEl = document.getElementById("highScoreBox");
+// var viewHighScoresP = document.createElement("p");
+viewHighScoresEl.textContent = "View High Scores";
+//  viewHighScoresEl.appendChild(viewHighScoresP);
+var timerAndScores = document.getElementById("timerAndScores");
+var runTimerEl = document.getElementById("runTimer");
 var quizChoice = document.getElementById("choiceBox");
 var choiceButtonA = document.createElement("button");
 var choiceButtonB = document.createElement("button");
@@ -13,122 +20,281 @@ choiceButtonB.className = "choicesButton";
 choiceButtonC.className = "choicesButton";
 choiceButtonD.className = "choicesButton";
 
+var answerLine = document.createElement("div");
+answerLine.id = "answerLine";
+var confirmation = "";
+var confirmEl = document.createElement("h3");
+confirmEl.id = "answerConfirmation";
+
+let resultBox = document.getElementById("resultBox");
+let resultMessage = document.createElement("div");
+resultMessage.id = "resultMessage";
+let resultScoreMessage = document.createElement("div");
+resultScoreMessage.id = "resultScoreMessage";
+let resultInitialsMessage = document.createElement("div");
+let resultInitialTextField = document.createElement("input");
+let resultSubmitButton = document.createElement("button");
+resultSubmitButton.id = "submitButton";
+let resultCovering = document.createElement("div");
+resultCovering.id = "resultCovering";
+
+let endOfQuizBox = document.getElementById("endOfQuiz");
+let endHighScoreMessage = document.createElement("div");
+endHighScoreMessage.id = "endHighScoreMessage";
+let endScoresHistory = document.createElement("div");
+endScoresHistory.id = "endScoresHistory";
+let goBackButton = document.createElement("button");
+goBackButton.className = "endScreenButton";
+let clearHighScoreButton = document.createElement("button");
+clearHighScoreButton.className = "endScreenButton";
+
 var quizQuestion = document.getElementById("questionBox");
-var i = 0;
+//var i = 0;
+var start = 60;
+var counter = 0;
+var score = 0;
 
-var showDisplayBox = function() {
+var showDisplayBox = function () {
+  var displayBoxTitleEl1 = document.createElement("h1");
+  var displayBoxTitleEl2 = document.createElement("h2");
+  var displayBoxTitleEl3 = document.createElement("h3");
+  var displayBoxTitleEl5 = document.createElement("h3");
+  var displayBoxTitleEl4 = document.createElement("h3");
 
-    var displayBoxTitleEl1 = document.createElement("h1");
-    var displayBoxTitleEl2 = document.createElement("h2");
-    var displayBoxTitleEl3 = document.createElement("h3");
-    var displayBoxTitleEl4 = document.createElement("h3");
+  displayBoxTitleEl1.textContent = "Coding Quiz";
 
-    displayBoxTitleEl1.textContent = "Coding Quiz";
-    
-    displayBoxTitleEl2.textContent = "Challenge";
-    
-    displayBoxTitleEl3.textContent = "Check out our online Coding quiz to enhance your knowledge of Javascript, HTML nad CSS";
-    
-	displayBoxTitleEl4.textContent = "";
+  displayBoxTitleEl2.textContent = "Challenge";
 
-    startQuizButton.textContent = "START QUIZ";
+  displayBoxTitleEl3.textContent =
+    "Checkout our online Coding quiz to enhance your knowledge of Javascript, HTML nad CSS.";
 
-    displayBox.appendChild(displayBoxTitleEl1);
-    displayBox.appendChild(displayBoxTitleEl2);
-    displayBox.appendChild(displayBoxTitleEl3);
-    displayBox.appendChild(displayBoxTitleEl4);
-    displayBox.appendChild(startQuizButton);
+  displayBoxTitleEl4.textContent = ""; 
+
+  displayBoxTitleEl5.textContent = " Please keep in mind that everytime you choose incorrect answer than the time will decrease by 5 seconds!!"
+
+  startQuizButton.textContent = "START QUIZ";
+
+  displayBox.appendChild(displayBoxTitleEl1);
+  displayBox.appendChild(displayBoxTitleEl2);
+  displayBox.appendChild(displayBoxTitleEl3);
+  displayBox.appendChild(displayBoxTitleEl4);
+  displayBox.appendChild(displayBoxTitleEl5);
+  displayBox.appendChild(startQuizButton);
 };
 showDisplayBox();
 
 var questions = [
-	{
-	question: "What does HTML stands for?",
-	choices: ["Hyper Text Markup Leveler", "Hyper Text Marketing Language", "Hyper Text Markup Language", "Hyper Trainer Marking Language"],
-	correctAnswer: "Hyper Text Markup Language" 
-	},
-	{
-	question: "JavaScript File has an extension of?",
-	choices: [".Java", ".Js", ".Javascript", ".xml" ],
-	correctAnswer: ".Js" 
-	},
-	{
-	question: "Which of the following statements will show a message as well as ask for user input in a popup?",
-	choices: ["alert()", "prompt()", "message()", "confirm()"],
-	correctAnswer: "prompt()" 
-	},
-	{
-	question: "Which property is used to change the background color in CSS?",
-	choices: ["background-color", "color", "bgcolor", "None of the above"],
-	correctAnswer: "background-color" 
-	},
-	{
-	question: "How do we write a comment in Javascript?",
-	choices: ["/**/", "//", "#", "$$"],
-	correctAnswer: "//" 
-	},
-	];
-function startTimer () {
+  {
+    question: "What does HTML stands for?",
+    choices: [
+      "Hyper Text Markup Leveler",
+      "Hyper Text Marketing Language",
+      "Hyper Text Markup Language",
+      "Hyper Trainer Marking Language",
+    ],
+    correctAnswer: "Hyper Text Markup Language",
+  },
+  {
+    question: "JavaScript File has an extension of?",
+    choices: [".Java", ".Js", ".Javascript", ".xml"],
+    correctAnswer: ".Js",
+  },
+  {
+    question:
+      "Which of the following statements will show a message as well as ask for user input in a popup?",
+    choices: ["alert()", "prompt()", "message()", "confirm()"],
+    correctAnswer: "prompt()",
+  },
+  {
+    question: "Which property is used to change the background color in CSS?",
+    choices: ["background-color", "color", "bgcolor", "None of the above"],
+    correctAnswer: "background-color",
+  },
+  {
+    question: "How do we write a comment in Javascript?",
+    choices: ["/**/", "//", "#", "$$"],
+    correctAnswer: "//",
+  },
+];
+var theTimer;
+function startTimer() {
+  function doThis() {
+    var end = 0;
+    start--;
+    runTimerEl.textContent = "Time Left:" + start.toString();
+    if (start <= end) {
+      window.clearInterval(theTimer);
 
+      showResultBox();
+    }
+  }
+  theTimer = window.setInterval(doThis, 1000);
+  console.log("startTime");
+}
+function checkAnswer(event) {
+  var choiceClick = event.target.textContent;
+  //console.log(buttonClicked);
+  if (choiceClick === questions[counter].correctAnswer) {
+    console.log(
+      "inside if statement ",
+      questions[counter].correctAnswer,
+      " ",
+      counter
+    );
+    score++;
+    confirmation = "Correct!";
+  } else {
+    start = start - 5;
+    confirmation = "Wrong!";
+  }
+  confirmEl.textContent = confirmation;
+  quizBoxEl.appendChild(answerLine);
+  quizBoxEl.appendChild(confirmEl);
+  counter++;
+
+  if (start <= 0 || counter > questions.length - 1) {
+    console.log("checking condition");
+    confirmEl.textContent = confirmation;
+    // answerLine.className = "line";
+
+    showResultBox();
+  } else {
+    showQuestion();
+  }
 }
 
-
-function showQuestion () {
-	// if (i >= questions.length -1) {
-	// 	showResultBox();
-	// } else {
-	// 	quizQuestion.innerText= questions[i].question;
-    //    showChoices(i);
-	// }
-for (var i=0; i >= questions.length; i--) {
-	quizQuestion.innertext = questions[i].question;
+function showQuestion() {
+  console.log("gdfg");
+  // if (i >= questions.length -1) {
+  // 	showResultBox();
+  // } else {
+  // 	quizQuestion.innerText= questions[i].question;
+  //    showChoices(i);
+  // }
+  {
+    quizQuestion.textContent = questions[counter].question;
+    showChoices();
+    // 	console.log("print all" + questions[i] + "!");
+    // }
+  }
 }
-}
-showQuestion();
 function showChoices() {
-	console.log(showChoices)
-	var anyText = "Parth";
-	questionEl.textcontent = questions[i].question;
-	//choiceButtonA.textcontent = questions[i].choices[0];
-	choiceButtonB.textcontent = questions[i].choices[1];
-	choiceButtonC.textcontent = questions[i].choices[2];
-	choiceButtonD.textcontent = questions[i].choices[3];
-	choiceButtonA.textContent = anyText;
+  //for (var i=0; i < questions[i].choices.length; i++) {
 
-	quizChoice.appendChild(choiceButtonA);
-	quizChoice.appendChild(choiceButtonB);
-	quizChoice.appendChild(choiceButtonC);
-	quizChoice.appendChild(choiceButtonD);
+  choiceButtonA.textContent = questions[counter].choices[0];
+  choiceButtonB.textContent = questions[counter].choices[1];
+  choiceButtonC.textContent = questions[counter].choices[2];
+  choiceButtonD.textContent = questions[counter].choices[3];
+  //}
+
+  quizChoice.appendChild(choiceButtonA);
+  quizChoice.appendChild(choiceButtonB);
+  quizChoice.appendChild(choiceButtonC);
+  quizChoice.appendChild(choiceButtonD);
+}
+function nextQuestion() {
+  //counter++
+
+  if (counter >= questions.length) {
+    //when end of quiz
+  }
+  startQuizBox();
 }
 
-function highScoreBox () {
+function highScoreBox() {}
 
-}
+function stopTimer() {}
 
+function somthing() {}
 
-function startQuizBox () {
-	displayBox.style.visibility = "visible";
-	//startTimer();
-	showQuestion();
-	showChoices();
-	//highScoreBox();
+function startQuizBox() {
+  displayBox.style.visibility = "visible";
 
+  showQuestion();
+  showChoices();
 
+  //highScoreBox();
 }
 function hideDisplayBox() {
-	displayBox.style.visibility = "hidden";
-	displayBox.style.display = "none";
+  displayBox.style.visibility = "hidden";
+  displayBox.style.display = "none";
 }
 
-
-	function startQuiz () {
-		console.log(" Start Quiz");
-		hideDisplayBox();
-		startQuizBox();
-
-	}
-function showResultBox () {
-	startQuizBox.style.visibility = "hidden";
+function startQuiz() {
+  console.log(" Start Quiz");
+  hideDisplayBox();
+  startQuizBox();
+  startTimer();
 }
-	startQuizButton.addEventListener("click", startQuiz);
+function showResultBox() {
+  console.log("inside result box function");
+  //startQuizBox.style.display = "none";
+  window.clearInterval(theTimer);
+  quizBoxEl.style.display = "none";
 
+  resultMessage.textContent = "All Done!";
+  resultScoreMessage.textContent = "Your final score is: " + start.toString();
+  resultInitialsMessage.textContent = "Enter Initials: ";
+  resultSubmitButton.textContent = "Submit";
+
+  resultBox.appendChild(resultMessage);
+  resultBox.appendChild(resultScoreMessage);
+  resultCovering.appendChild(resultInitialsMessage);
+  resultCovering.appendChild(resultInitialTextField);
+  resultCovering.appendChild(resultSubmitButton);
+  resultBox.appendChild(resultCovering);
+}
+function endOfQuiz() {
+  resultBox.style.visibility = "hidden";
+  resultBox.style.display = "none";
+
+  localStorage.setItem(resultInitialTextField.value, start.toString());
+
+  endHighScoreMessage.textContent = "High Scores";
+  goBackButton.textContent = "Go Back";
+  clearHighScoreButton.textContent = "Clear High Score";
+
+  endOfQuizBox.appendChild(endHighScoreMessage);
+
+  for (var i = 0; i < localStorage.length; i++) {
+    var newPTag = document.createElement("p");
+    newPTag.textContent = `${i + 1}. ${localStorage.key(
+      i
+    )}: ${localStorage.getItem(localStorage.key(i))}`;
+    console.log(localStorage.key(i));
+
+    endScoresHistory.appendChild(newPTag);
+  }
+
+  endOfQuizBox.appendChild(endScoresHistory);
+  endOfQuizBox.appendChild(goBackButton);
+  endOfQuizBox.appendChild(clearHighScoreButton);
+}
+
+function clearHighScorefunction(){
+  //endScoresHistory.textContent="";
+  localStorage.clear();
+
+}
+
+var goBackToDisplayBox = function () {
+  location.reload();
+};
+
+quizChoice.addEventListener("click", checkAnswer);
+
+choiceButtonA.addEventListener("click", nextQuestion);
+
+choiceButtonB.addEventListener("click", nextQuestion);
+
+choiceButtonC.addEventListener("click", nextQuestion);
+
+choiceButtonD.addEventListener("click", nextQuestion);
+
+resultSubmitButton.addEventListener("click", endOfQuiz);
+
+goBackButton.addEventListener("click", goBackToDisplayBox);
+
+startQuizButton.addEventListener("click", startQuiz);
+
+clearHighScoreButton.addEventListener("click", clearHighScorefunction);
