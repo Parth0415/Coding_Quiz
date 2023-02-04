@@ -20,7 +20,7 @@ Also learned how to implement appendchild function in javascript which will appe
 https://parth0415.github.io/Fundamental_Coding_Quiz/
 
 ## Usage
-![Project](./assets/image/Coding_Quiz_Screenshot.png "Project3")
+![Project](./assets/image/Coding_Quiz_ScreenshotNew.png "Project3")
 
 ## LICENSE
 Please refer to the LICENSE in the repository.
