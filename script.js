@@ -1,5 +1,7 @@
+//getting element by id from document
 var displayBox = document.getElementById("displayBox");
 var quizBoxEl = document.getElementById("quizBox");
+//creating a element button in javascript
 var startQuizButton = document.createElement("button");
 startQuizButton.id = "btn";
 //var questionEl = document.createElement('h2');
@@ -53,7 +55,7 @@ var quizQuestion = document.getElementById("questionBox");
 var start = 60;
 var counter = 0;
 var score = 0;
-
+// Function which displays front page of quiz
 var showDisplayBox = function () {
   var displayBoxTitleEl1 = document.createElement("h1");
   var displayBoxTitleEl2 = document.createElement("h2");
@@ -73,7 +75,7 @@ var showDisplayBox = function () {
   displayBoxTitleEl5.textContent = " Please keep in mind that everytime you choose incorrect answer than the time will decrease by 5 seconds!!"
 
   startQuizButton.textContent = "START QUIZ";
-
+// appending content from javascript to html document
   displayBox.appendChild(displayBoxTitleEl1);
   displayBox.appendChild(displayBoxTitleEl2);
   displayBox.appendChild(displayBoxTitleEl3);
@@ -117,6 +119,7 @@ var questions = [
   },
 ];
 var theTimer;
+//function to start timer for quiz
 function startTimer() {
   function doThis() {
     var end = 0;
@@ -131,6 +134,7 @@ function startTimer() {
   theTimer = window.setInterval(doThis, 1000);
   console.log("startTime");
 }
+//function event to check wether the answer which is selected by user is correct or wrong
 function checkAnswer(event) {
   var choiceClick = event.target.textContent;
   //console.log(buttonClicked);
@@ -143,6 +147,7 @@ function checkAnswer(event) {
     );
     score++;
     confirmation = "Correct!";
+    // function to decrease time by 5 seconds if user select wrong answer
   } else {
     start = start - 5;
     confirmation = "Wrong!";
@@ -162,7 +167,7 @@ function checkAnswer(event) {
     showQuestion();
   }
 }
-
+//function which will display the questions
 function showQuestion() {
   console.log("gdfg");
   // if (i >= questions.length -1) {
@@ -178,6 +183,7 @@ function showQuestion() {
     // }
   }
 }
+// function which will show choices for question
 function showChoices() {
   //for (var i=0; i < questions[i].choices.length; i++) {
 
@@ -192,6 +198,7 @@ function showChoices() {
   quizChoice.appendChild(choiceButtonC);
   quizChoice.appendChild(choiceButtonD);
 }
+// function which will help to change questions
 function nextQuestion() {
   //counter++
 
@@ -206,7 +213,7 @@ function highScoreBox() {}
 function stopTimer() {}
 
 function somthing() {}
-
+// function to start quiz which will show question and options
 function startQuizBox() {
   displayBox.style.visibility = "visible";
 
@@ -215,17 +222,19 @@ function startQuizBox() {
 
   //highScoreBox();
 }
+// function which will hide display box and show start quiz box
 function hideDisplayBox() {
   displayBox.style.visibility = "hidden";
   displayBox.style.display = "none";
 }
-
+// function to start quiz and will start all the functions in it
 function startQuiz() {
   console.log(" Start Quiz");
   hideDisplayBox();
   startQuizBox();
   startTimer();
 }
+// function to show result box 
 function showResultBox() {
   console.log("inside result box function");
   //startQuizBox.style.display = "none";
@@ -244,6 +253,7 @@ function showResultBox() {
   resultCovering.appendChild(resultSubmitButton);
   resultBox.appendChild(resultCovering);
 }
+// function to end quiz
 function endOfQuiz() {
   resultBox.style.visibility = "hidden";
   resultBox.style.display = "none";
@@ -255,7 +265,7 @@ function endOfQuiz() {
   clearHighScoreButton.textContent = "Clear High Score";
 
   endOfQuizBox.appendChild(endHighScoreMessage);
-
+// function to store value in local storage
   for (var i = 0; i < localStorage.length; i++) {
     var newPTag = document.createElement("p");
     newPTag.textContent = `${i + 1}. ${localStorage.key(
@@ -270,17 +280,17 @@ function endOfQuiz() {
   endOfQuizBox.appendChild(goBackButton);
   endOfQuizBox.appendChild(clearHighScoreButton);
 }
-
+// function which will help to delete data from local storage
 function clearHighScorefunction(){
   //endScoresHistory.textContent="";
   localStorage.clear();
 
 }
-
+// function to restart the quiz
 var goBackToDisplayBox = function () {
   location.reload();
 };
-
+// adding event listener to buttons so that they will function
 quizChoice.addEventListener("click", checkAnswer);
 
 choiceButtonA.addEventListener("click", nextQuestion);
